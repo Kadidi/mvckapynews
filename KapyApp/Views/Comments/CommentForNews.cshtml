@@ -62,22 +62,27 @@
                             @Html.DisplayFor(modelItem => item.News1.uniqueTitle)
                         </td>*@
                     <td>
+                        @Html.Action("Like", "Comments", new { id = item.commentId })
+
+                    </td>
                         @*@Html.ActionLink("Edit", "Edit", new { id = item.commentId }) |
                         @Html.ActionLink("Details", "Details", new { id = item.commentId }) |*@
                         
                         @*This will display the like button*@
-                        
-                            @Html.Action("Like", "Comments", new { id = item.commentId })
-                       
-                    </td>
-                </tr>
+               
+                           
+                    <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.commentId }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.commentId })
+                        </td>
+                    </tr>
+                }
             }
-        }
 
-    </table>
+        </table>
 
-    <p>
-        @Html.ActionLink("Comment Now", "CreateCommentForNews", new { id = ViewBag.newsID })
-    </p>
+        <p>
+            @Html.ActionLink("Comment Now", "CreateCommentForNews", new { id = ViewBag.newsID })
+        </p>
 
-</body>
+    </body>
