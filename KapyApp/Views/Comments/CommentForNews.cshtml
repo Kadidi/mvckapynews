@@ -64,8 +64,11 @@
                     <td>
                         @*@Html.ActionLink("Edit", "Edit", new { id = item.commentId }) |
                         @Html.ActionLink("Details", "Details", new { id = item.commentId }) |*@
-                        @Html.ActionLink("Like", "LikeAComment", "Comments", new { id = item.commentId }, null)
                         
+                        @*This will display the like button*@
+                        
+                            @Html.Action("Like", "Comments", new { id = item.commentId })
+                       
                     </td>
                 </tr>
             }

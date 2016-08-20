@@ -364,6 +364,7 @@
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Comments\CreateCommentForNews.cshtml" />
     <Content Include="Views\Comments\CommentForNews.cshtml" />
+    <Content Include="Views\Comments\Like.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

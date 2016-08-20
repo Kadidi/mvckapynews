@@ -1,0 +1,19 @@
+﻿@model KapyApp.Models.Comment
+
+@{
+    Layout = "";
+}
+
+@using (Html.BeginForm("LikeAComment","Comments", new { id = @ViewBag.commentID }, FormMethod.Post,null))
+{
+    @Html.AntiForgeryToken()
+  
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@  
+        @*<div class="form-group">*@
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Like" class="btn btn-default" />
+            </div>
+        @*</div>*@
+    
+}
+

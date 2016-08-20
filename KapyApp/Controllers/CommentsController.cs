@@ -43,6 +43,7 @@ namespace KapyApp.Controllers
             ViewBag.userId = new SelectList(db.Users, "userId", "userId");
             //ViewBag.userId = new SelectList(db.Users, "userId", "userName");
             ViewBag.newsId = new SelectList(db.News1, "newsId", "newsId");
+            
             return View();
         }
 
@@ -55,6 +56,7 @@ namespace KapyApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                comment.numOfComentLikes = 0;
                 db.Comments.Add(comment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -126,11 +128,12 @@ namespace KapyApp.Controllers
             return RedirectToAction("Index");
         }
 
-        
+
 
 
         //This function retrieve all comments for a given news
         // GET: Comments/CommentForNews/5
+        
         public ActionResult CommentForNews(int? id, string sortOrder)
         {
             if (id == null)
@@ -197,6 +200,7 @@ namespace KapyApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                comment.numOfComentLikes = 0;
                 comment.newsId = id;
                 db.Comments.Add(comment);
                 db.SaveChanges();
@@ -209,31 +213,43 @@ namespace KapyApp.Controllers
             return View(comment);
         }
 
-        //LikeComment increases the numberOfLikes for a given comment
-        // POST: Comments/LikeAComment/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LikeAComment(int? id)
+
+
+
+        // GET: Comments/Like/5
+       
+        public ActionResult Like(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var comment = db.Comments.Find(id);
+            Comment comment = db.Comments.Find(id);
             if (comment == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.commentID = id;
+            return PartialView(comment);
+        }
 
-            if (ModelState.IsValid)
-            {
-                comment.numOfComentLikes++;
-                db.Entry(comment).State = EntityState.Modified;
-                db.SaveChanges();    
-            }
 
+
+
+        //LikeComment increases the numberOfLikes for a given comment
+        // POST: Comments/LikeAComment/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost, ActionName("Like")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LikeAComment(int id)
+        {
+            Comment comment = db.Comments.Find(id);
+            comment.numOfComentLikes++;
+            db.Entry(comment).State = EntityState.Modified;
+            db.SaveChanges();    
+            
             return RedirectToAction("Details", "News1", new { id = comment.newsId });
         }
 
